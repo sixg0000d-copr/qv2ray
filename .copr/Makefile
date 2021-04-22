@@ -25,7 +25,7 @@ init:
 endif
 
 .ONESHELL:
-$(outdir)/$(source0): init $(outdir)
+source: init $(outdir)
 	cd $(outdir)
 	git clone https://github.com/Qv2ray/Qv2ray $(name-version)
 	cd $(name-version)
@@ -35,7 +35,7 @@ $(outdir)/$(source0): init $(outdir)
 	tar czf $(source0) --exclude .git $(name-version)
 	rm -rf $(name-version)
 
-srpm: init $(outdir)/$(source0)
+srpm: init source $(outdir)
 	rpmbuild \
 	--define "_sourcedir $(outdir)" \
 	--define "_srcrpmdir $(outdir)" \
@@ -44,4 +44,4 @@ srpm: init $(outdir)/$(source0)
 clean:
 	rm -rf $(outdir)
 
-.PHONY: all init srpm clean
+.PHONY: all init source srpm clean
