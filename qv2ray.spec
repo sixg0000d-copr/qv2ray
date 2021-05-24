@@ -100,9 +100,6 @@ Basic subscription support for Qv2ray.
 # https://bugzilla.redhat.com/show_bug.cgi?id=1894854
 echo "%%lang(yue_HK) %{_datadir}/qv2ray/lang/yue.qm" >> %{name}.lang
 
-# Find icon files
-grep "%{_datadir}/icons/hicolor/.*" %{__cmake_builddir}/install_manifest.txt >> %{name}.icons
-
 
 %if %{with check}
 %check
@@ -112,12 +109,13 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/qv2ray.metainf
 %endif
 
 
-%files -f %{name}.lang -f %{name}.icons
+%files -f %{name}.lang
 %license LICENSE
 %doc README.md
 %{_bindir}/qv2ray
 %{_metainfodir}/qv2ray.metainfo.xml
 %{_datadir}/applications/qv2ray.desktop
+%{_datadir}/icons/hicolor/*
 %dir %{_datadir}/qv2ray/
 %dir %{_datadir}/qv2ray/lang/
 %dir %{_datadir}/qv2ray/plugins/
