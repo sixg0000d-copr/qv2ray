@@ -85,7 +85,7 @@ Basic subscription support for Qv2ray.
 %{?with_check:            -DBUILD_TESTING=ON} \
 %{?with_use_system_libuv: -DUSE_SYSTEM_LIBUV=ON} \
                           -DQV2RAY_BUILD_INFO="Qv2ray built from rpmbuild" \
-                          -DQV2RAY_BUILD_EXTRA_INFO="$(rpmbuild --version), kernel-$(uname -r), qt-$(pkg-config --modversion Qt5Core)" \
+                          -DQV2RAY_BUILD_EXTRA_INFO="$(rpmbuild --version), kernel-$(uname -r), qt-$(pkg-config --modversion Qt5)" \
                           -DQV2RAY_DEFAULT_VCORE_PATH="%{_bindir}/v2ray" \
                           -DQV2RAY_DEFAULT_VASSETS_PATH="%{_datadir}/v2ray" \
                           -DCMAKE_BUILD_TYPE="Release"
