@@ -41,6 +41,7 @@ BuildRequires:    protobuf-devel
 BuildRequires:    grpc-devel
 BuildRequires:    grpc-plugins
 BuildRequires:    cmake(Qt5)
+BuildRequires:    cmake(Qt5Gui)
 BuildRequires:    cmake(Qt5Svg)
 BuildRequires:    cmake(Qt5LinguistTools)
 Requires:         hicolor-icon-theme
