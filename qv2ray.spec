@@ -1,6 +1,10 @@
 %bcond_without    check
 %bcond_without    use_system_libuv
 
+%if 0%{?fedora} >= 34
+%bcond_without    qt6
+%endif
+
 %global forgeurl  https://github.com/Qv2ray/Qv2ray
 %global branch    dev
 Version:          2.7.0
@@ -40,10 +44,17 @@ BuildRequires:    libcurl-devel
 BuildRequires:    protobuf-devel
 BuildRequires:    grpc-devel
 BuildRequires:    grpc-plugins
+%if %{with qt6}
+BuildRequires:    cmake(Qt6)
+BuildRequires:    cmake(Qt6Gui)
+BuildRequires:    cmake(Qt6Svg)
+BuildRequires:    cmake(Qt6LinguistTools)
+%else
 BuildRequires:    cmake(Qt5)
 BuildRequires:    cmake(Qt5Gui)
 BuildRequires:    cmake(Qt5Svg)
 BuildRequires:    cmake(Qt5LinguistTools)
+%endif
 Requires:         hicolor-icon-theme
 
 Recommends:       %{name}-plugin-builtin-protocol-support%{?_isa} = %{version}-%{release}
@@ -81,11 +92,18 @@ Basic subscription support for Qv2ray.
 
 
 %build
+%if %{with qt6}
+export QT_MODVERSION="$(pkg-config --modversion Qt6)"
+%else
+export QT_MODVERSION="$(pkg-config --modversion Qt5)"
+%endif
+
 %cmake                    -DQV2RAY_DISABLE_AUTO_UPDATE=ON \
 %{?with_check:            -DBUILD_TESTING=ON} \
 %{?with_use_system_libuv: -DUSE_SYSTEM_LIBUV=ON} \
                           -DQV2RAY_BUILD_INFO="Qv2ray built from rpmbuild" \
-                          -DQV2RAY_BUILD_EXTRA_INFO="$(rpmbuild --version), kernel-$(uname -r), qt-$(pkg-config --modversion Qt5)" \
+                          -DQV2RAY_BUILD_EXTRA_INFO="$(rpmbuild --version), kernel-$(uname -r), qt-${QT_MODVERSION:-unknown}" \
+%{?with_qt6:              -DQV2RAY_QT6=ON} \
                           -DQV2RAY_DEFAULT_VCORE_PATH="%{_bindir}/v2ray" \
                           -DQV2RAY_DEFAULT_VASSETS_PATH="%{_datadir}/v2ray" \
                           -DCMAKE_BUILD_TYPE="Release"
