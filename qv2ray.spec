@@ -94,11 +94,7 @@ Basic subscription support for Qv2ray.
 
 %install
 %cmake_install
-
-# Find lang files
 %find_lang %{name} --with-qt --all-name
-# https://bugzilla.redhat.com/show_bug.cgi?id=1894854
-echo "%%lang(yue_HK) %{_datadir}/qv2ray/lang/yue.qm" >> %{name}.lang
 
 
 %if %{with check}
@@ -119,6 +115,9 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/qv2ray.metainf
 %dir %{_datadir}/qv2ray/
 %dir %{_datadir}/qv2ray/lang/
 %dir %{_datadir}/qv2ray/plugins/
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=1894854
+%lang(yue_HK) %{_datadir}/qv2ray/lang/yue.qm
 
 %files plugin-builtin-protocol-support
 %{_datadir}/qv2ray/plugins/libQvPlugin-BuiltinProtocolSupport.so
