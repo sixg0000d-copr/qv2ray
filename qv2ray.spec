@@ -2,7 +2,7 @@
 %bcond_without    use_system_libuv
 
 %if 0%{?fedora} >= 34
-%bcond_without    qt6
+%bcond_with       qt6
 %endif
 
 %global forgeurl  https://github.com/Qv2ray/Qv2ray
@@ -12,7 +12,7 @@ Version:          2.7.0
 %forgemeta
 
 Name:             qv2ray
-Release:          0.2.pre2%{?dist}
+Release:          0.3.pre2%{?dist}
 Summary:          A cross-platform V2Ray graphical front-end
 License:          GPLv3
 URL:              https://qv2ray.net/
