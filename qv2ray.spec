@@ -12,7 +12,7 @@ Version:          2.7.0
 %forgemeta
 
 Name:             qv2ray
-Release:          0.3.pre2%{?dist}
+Release:          0.4.pre2%{?dist}
 Summary:          A cross-platform V2Ray graphical front-end
 License:          GPLv3
 URL:              https://qv2ray.net/
@@ -101,7 +101,7 @@ export QT_MODVERSION="$(pkg-config --modversion Qt5)"
 %cmake                    -DQV2RAY_DISABLE_AUTO_UPDATE=ON \
 %{?with_check:            -DBUILD_TESTING=ON} \
 %{?with_use_system_libuv: -DUSE_SYSTEM_LIBUV=ON} \
-                          -DQV2RAY_BUILD_INFO="Qv2ray built from rpmbuild" \
+                          -DQV2RAY_BUILD_INFO="Qv2ray built by rpm-build" \
                           -DQV2RAY_BUILD_EXTRA_INFO="$(rpmbuild --version), kernel-$(uname -r), qt-${QT_MODVERSION:-unknown}" \
 %{?with_qt6:              -DQV2RAY_QT6=ON} \
                           -DQV2RAY_DEFAULT_VCORE_PATH="%{_bindir}/v2ray" \
