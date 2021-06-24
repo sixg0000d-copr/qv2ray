@@ -1,0 +1,55 @@
+From 5150f5b658b629751d963c96a0d293caca15ba81 Mon Sep 17 00:00:00 2001
+From: sixg0000d <sixg0000d@gmail.com>
+Date: Thu, 17 Jun 2021 04:41:15 +0800
+Subject: [PATCH] update include path
+
+---
+ test/libs/QJsonStruct/QJsonIO.cpp           | 2 +-
+ test/src/core/connection/TestParseSS.cpp    | 2 +-
+ test/src/core/connection/TestParseVLESS.cpp | 2 +-
+ test/src/core/connection/TestParseVmess.cpp | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/test/libs/QJsonStruct/QJsonIO.cpp b/test/libs/QJsonStruct/QJsonIO.cpp
+index 26430afd..29fb7793 100644
+--- a/test/libs/QJsonStruct/QJsonIO.cpp
++++ b/test/libs/QJsonStruct/QJsonIO.cpp
+@@ -1,4 +1,4 @@
+-#include "3rdparty/QJsonStruct/QJsonIO.hpp"
++#include "src/plugin-interface/QJsonStruct/QJsonIO.hpp"
+ 
+ #include <QJsonDocument>
+ #include <QJsonObject>
+diff --git a/test/src/core/connection/TestParseSS.cpp b/test/src/core/connection/TestParseSS.cpp
+index d1a0c1ac..abe27e3f 100644
+--- a/test/src/core/connection/TestParseSS.cpp
++++ b/test/src/core/connection/TestParseSS.cpp
+@@ -1,4 +1,4 @@
+-#include "3rdparty/QJsonStruct/QJsonIO.hpp"
++#include "src/plugin-interface/QJsonStruct/QJsonIO.hpp"
+ #include "Common.hpp"
+ #include "src/core/connection/Serialization.hpp"
+ #define CATCH_CONFIG_MAIN
+diff --git a/test/src/core/connection/TestParseVLESS.cpp b/test/src/core/connection/TestParseVLESS.cpp
+index 134f3783..593359df 100644
+--- a/test/src/core/connection/TestParseVLESS.cpp
++++ b/test/src/core/connection/TestParseVLESS.cpp
+@@ -1,4 +1,4 @@
+-#include "3rdparty/QJsonStruct/QJsonIO.hpp"
++#include "src/plugin-interface/QJsonStruct/QJsonIO.hpp"
+ #include "Common.hpp"
+ #include "src/core/connection/Serialization.hpp"
+ #define CATCH_CONFIG_MAIN
+diff --git a/test/src/core/connection/TestParseVmess.cpp b/test/src/core/connection/TestParseVmess.cpp
+index a60c559f..d7da7c31 100644
+--- a/test/src/core/connection/TestParseVmess.cpp
++++ b/test/src/core/connection/TestParseVmess.cpp
+@@ -1,4 +1,4 @@
+-#include "3rdparty/QJsonStruct/QJsonIO.hpp"
++#include "src/plugin-interface/QJsonStruct/QJsonIO.hpp"
+ #include "Common.hpp"
+ #include "src/core/connection/Serialization.hpp"
+ #define CATCH_CONFIG_MAIN
+-- 
+2.31.1
+

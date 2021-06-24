@@ -27,7 +27,7 @@ endif
 .ONESHELL:
 source: init $(outdir)
 	cd $(outdir)
-	git clone https://github.com/Qv2ray/Qv2ray $(name-version)
+	git clone https://github.com/Shadowsocks-NET/Qv2ray $(name-version)
 	cd $(name-version)
 	git checkout $(committish)
 	git submodule update --init --recursive
@@ -35,8 +35,12 @@ source: init $(outdir)
 	tar czf $(source0) --exclude .git $(name-version)
 	rm -rf $(name-version)
 
-srpm: init source $(outdir)
+patch: init $(outdir)
+	cp $(PROJECT_ROOT)/*.patch $(outdir)
+
+srpm: init source patch $(outdir)
 	rpmbuild \
+	--undefine "_disable_source_fetch" \
 	--define "_sourcedir $(outdir)" \
 	--define "_srcrpmdir $(outdir)" \
 	-bs $(spec)
@@ -44,4 +48,4 @@ srpm: init source $(outdir)
 clean:
 	rm -rf $(outdir)
 
-.PHONY: all init source srpm clean
+.PHONY: all init source patch srpm clean

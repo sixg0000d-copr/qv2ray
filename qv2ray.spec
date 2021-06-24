@@ -1,9 +1,9 @@
 %bcond_without    check
 %bcond_without    use_system_libuv
 
-%global forgeurl  https://github.com/Qv2ray/Qv2ray
-%global branch    dev
-Version:          2.7.0
+%global forgeurl  https://github.com/Shadowsocks-NET/Qv2ray
+%global branch    main
+Version:          3.0.0
 
 %forgemeta
 
@@ -15,7 +15,7 @@ URL:              https://qv2ray.net/
 
 # Source is created by:
 # cd $(outdir)
-# git clone https://github.com/Qv2ray/Qv2ray $(name-version)
+# git clone https://github.com/Shadowsocks-NET/Qv2ray $(name-version)
 # cd $(name-version)
 # git checkout $(committish)
 # git submodule update --init --recursive
@@ -23,6 +23,9 @@ URL:              https://qv2ray.net/
 # tar czf $(source0) --exclude .git $(name-version)
 # rm -rf $(name-version)
 Source0:          %{archivename}.tar.gz
+
+Patch0:           0001-update-include-path.patch
+Patch1:           https://github.com/Qv2ray/Qv2ray/commit/12e508cc5d9a3e9e3eacd91ddd85f5eabb150849.patch
 
 %if %{with check}
 BuildRequires:    desktop-file-utils
@@ -40,10 +43,9 @@ BuildRequires:    libcurl-devel
 BuildRequires:    protobuf-devel
 BuildRequires:    grpc-devel
 BuildRequires:    grpc-plugins
-BuildRequires:    cmake(Qt5)
-BuildRequires:    cmake(Qt5Gui)
-BuildRequires:    cmake(Qt5Svg)
-BuildRequires:    cmake(Qt5LinguistTools)
+BuildRequires:    cmake(Qt6)
+BuildRequires:    cmake(Qt6Gui)
+BuildRequires:    cmake(Qt6Svg)
 Requires:         hicolor-icon-theme
 
 Recommends:       %{name}-plugin-builtin-protocol-support%{?_isa} = %{version}-%{release}
@@ -77,7 +79,7 @@ Basic subscription support for Qv2ray.
 
 
 %prep
-%forgeautosetup
+%forgeautosetup -p 1
 
 
 %build
@@ -85,7 +87,7 @@ Basic subscription support for Qv2ray.
 %{?with_check:            -DBUILD_TESTING=ON} \
 %{?with_use_system_libuv: -DUSE_SYSTEM_LIBUV=ON} \
                           -DQV2RAY_BUILD_INFO="Qv2ray built from rpmbuild" \
-                          -DQV2RAY_BUILD_EXTRA_INFO="$(rpmbuild --version), kernel-$(uname -r), qt-$(pkg-config --modversion Qt5)" \
+                          -DQV2RAY_BUILD_EXTRA_INFO="$(rpmbuild --version), kernel-$(uname -r), qt-$(pkg-config --modversion Qt6)" \
                           -DQV2RAY_DEFAULT_VCORE_PATH="%{_bindir}/v2ray" \
                           -DQV2RAY_DEFAULT_VASSETS_PATH="%{_datadir}/v2ray" \
                           -DCMAKE_BUILD_TYPE="Release"
@@ -94,7 +96,6 @@ Basic subscription support for Qv2ray.
 
 %install
 %cmake_install
-%find_lang %{name} --with-qt --all-name
 
 
 %if %{with check}
@@ -105,25 +106,21 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/qv2ray.metainf
 %endif
 
 
-%files -f %{name}.lang
+%files
 %license LICENSE
 %doc README.md
 %{_bindir}/qv2ray
 %{_metainfodir}/qv2ray.metainfo.xml
 %{_datadir}/applications/qv2ray.desktop
 %{_datadir}/icons/hicolor/*
-%dir %{_datadir}/qv2ray/
-%dir %{_datadir}/qv2ray/lang/
-%dir %{_datadir}/qv2ray/plugins/
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=1894854
-%lang(yue_HK) %{_datadir}/qv2ray/lang/yue.qm
+%dir %{_exec_prefix}/lib/qv2ray/
+%dir %{_exec_prefix}/lib/qv2ray/plugins/
 
 %files plugin-builtin-protocol-support
-%{_datadir}/qv2ray/plugins/libQvPlugin-BuiltinProtocolSupport.so
+%{_exec_prefix}/lib/qv2ray/plugins/libQvPlugin-BuiltinProtocolSupport.so
 
 %files plugin-builtin-subscription-support
-%{_datadir}/qv2ray/plugins/libQvPlugin-BuiltinSubscriptionSupport.so
+%{_exec_prefix}/lib/qv2ray/plugins/libQvPlugin-BuiltinSubscriptionSupport.so
 
 
 %changelog
