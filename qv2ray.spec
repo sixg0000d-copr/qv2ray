@@ -1,9 +1,6 @@
 %bcond_without    check
 %bcond_without    use_system_libuv
-
-%if 0%{?fedora} >= 34
 %bcond_with       qt6
-%endif
 
 %global forgeurl  https://github.com/Qv2ray/Qv2ray
 %global branch    dev
@@ -12,7 +9,7 @@ Version:          2.7.0
 %forgemeta
 
 Name:             qv2ray
-Release:          0.4.pre2%{?dist}
+Release:          0.5%{?dist}
 Summary:          A cross-platform V2Ray graphical front-end
 License:          GPLv3
 URL:              https://qv2ray.net/
@@ -134,8 +131,10 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/qv2ray.metainf
 %dir %{_datadir}/qv2ray/lang/
 %dir %{_datadir}/qv2ray/plugins/
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=1894854
+# https://github.com/rpm-software-management/rpm/issues/1642
+%if 0%{?fedora} <= 35
 %lang(yue_HK) %{_datadir}/qv2ray/lang/yue.qm
+%endif
 
 %files plugin-builtin-protocol-support
 %{_datadir}/qv2ray/plugins/libQvPlugin-BuiltinProtocolSupport.so
@@ -145,5 +144,8 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/qv2ray.metainf
 
 
 %changelog
+* Sat Jun 26 2021 sixg0000d <sixg0000d@gmail.com> - 2.7.0-0.5.20210626gitdev
+- Update spec file
+
 * Thu Apr 22 2021 sixg0000d <sixg0000d@gmail.com> - 2.7.0-0.2.pre2.20210422gitdev
 - Initial qv2ray
