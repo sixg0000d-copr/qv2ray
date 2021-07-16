@@ -39,6 +39,7 @@ BuildRequires:    libuv-devel >= 1.38.1
 BuildRequires:    cmake >= 3.10.1
 BuildRequires:    gcc
 BuildRequires:    gcc-c++
+BuildRequires:    openssl-devel
 BuildRequires:    libcurl-devel
 BuildRequires:    protobuf-devel
 BuildRequires:    grpc-devel
