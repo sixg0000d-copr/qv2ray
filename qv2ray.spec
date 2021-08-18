@@ -3,26 +3,26 @@
 %bcond_with       qt6
 
 %global forgeurl  https://github.com/Qv2ray/Qv2ray
-%global branch    dev
+%global tag       v2.7.0
 Version:          2.7.0
 
 %forgemeta
 
 Name:             qv2ray
-Release:          0.5%{?dist}
+Release:          %{autorelease}
 Summary:          A cross-platform V2Ray graphical front-end
 License:          GPLv3
 URL:              https://qv2ray.net/
 
 # Source is created by:
 # cd $(outdir)
-# git clone https://github.com/Qv2ray/Qv2ray $(name-version)
-# cd $(name-version)
+# git clone https://github.com/Qv2ray/Qv2ray $(archivename)
+# cd $(archivename)
 # git checkout $(committish)
 # git submodule update --init --recursive
 # cd ..
-# tar czf $(source0) --exclude .git $(name-version)
-# rm -rf $(name-version)
+# tar czf $(source0) --exclude .git $(archivename)
+# rm -rf $(archivename)
 Source0:          %{archivename}.tar.gz
 
 %if %{with check}
@@ -144,8 +144,4 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/qv2ray.metainf
 
 
 %changelog
-* Sat Jun 26 2021 sixg0000d <sixg0000d@gmail.com> - 2.7.0-0.5.20210626gitdev
-- Update spec file
-
-* Thu Apr 22 2021 sixg0000d <sixg0000d@gmail.com> - 2.7.0-0.2.pre2.20210422gitdev
-- Initial qv2ray
+%{autochangelog}

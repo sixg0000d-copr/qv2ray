@@ -4,7 +4,7 @@ PROJECT_ROOT := $(abspath $(MAKEFILE_DIR)/..)
 spec ?= $(PROJECT_ROOT)/qv2ray.spec
 outdir ?= $(PROJECT_ROOT)/outdir
 source0 = $(shell spectool -s 0 $(spec) | awk '/Source0:/ { print $$2 }')
-name-version = $(shell basename -s .tar.gz $(source0))
+archivename = $(shell basename -s .tar.gz $(source0))
 tag = $(shell awk '/%global tag/ { print $$3 }' $(spec))
 branch = $(shell awk '/%global branch/ { print $$3 }' $(spec))
 commit = $(shell awk '/%global commit/ { print $$3 }' $(spec))
@@ -27,13 +27,13 @@ endif
 .ONESHELL:
 source: init $(outdir)
 	cd $(outdir)
-	git clone https://github.com/Qv2ray/Qv2ray $(name-version)
-	cd $(name-version)
+	git clone https://github.com/Qv2ray/Qv2ray $(archivename)
+	cd $(archivename)
 	git checkout $(committish)
 	git submodule update --init --recursive
 	cd ..
-	tar czf $(source0) --exclude .git $(name-version)
-	rm -rf $(name-version)
+	tar czf $(source0) --exclude .git $(archivename)
+	rm -rf $(archivename)
 
 srpm: init source $(outdir)
 	rpmbuild \
